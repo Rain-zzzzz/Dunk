@@ -5,6 +5,7 @@ using UnityEngine;
 public class PanelManager : MonoBehaviour
 {
     [SerializeField] private GameObject[] panels;
+    [SerializeField] private GameObject[] stepPanels;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class PanelManager : MonoBehaviour
     public void ShowOnion()
     {
         panels[2].SetActive(true);
+        stepPanels[0].SetActive(true);
     }
     public void ShowTiaoLiao()
     {
