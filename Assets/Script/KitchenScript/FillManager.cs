@@ -4,10 +4,10 @@ using System.Collections;
 
 public class FillManager : MonoBehaviour
 {
-    public GameObject recipePopup; // ÍÏ×§ Popup_Recipe
-    public Animator itemTableAnim; // Ê³²ÄÌ¨µÄAnimator£¨´¥·¢ÇĞ²Ë¶¯»­£©
-    public GameObject choppedPrefab; // ÇĞºÃµÄÅäÁÏÔ¤ÖÆÌå£¨±ÈÈçÒ»¸öÔ²ĞÎĞ¡Í¼±ê£©
-    public Transform choppedParent;  // Éú³ÉÇĞºÃÅäÁÏµÄ¸¸ÎïÌå£¨ÈçGrid²¼¾Ö£©
+    public GameObject recipePopup;
+    public Animator itemTableAnim;
+    public GameObject choppedPrefab;
+    public Transform choppedParent;
 
     public int targetApple = 2;
     public int targetOnion = 3;
@@ -18,13 +18,11 @@ public class FillManager : MonoBehaviour
     private int currentOrange = 0;
     private int totalFilled = 0;
 
-    // µã»÷Ê³Æ×¿´°å
     public void OnClickRecipeBoard()
     {
-        recipePopup.SetActive(!recipePopup.activeSelf); // ÇĞ»»µ¯´°
+        recipePopup.SetActive(!recipePopup.activeSelf);
     }
 
-    // µã»÷Ê³²ÄÌ¨ÉÏµÄÆ»¹û/Ñó´Ğ/³È×Ó°´Å¥£¨·Ö±ğ°ó¶¨ÕâÈı¸ö·½·¨£©
     public void AddApple()
     {
         StartCoroutine(ChopAndAdd(IngredientType.Apple));
@@ -40,14 +38,11 @@ public class FillManager : MonoBehaviour
 
     private IEnumerator ChopAndAdd(IngredientType type)
     {
-        // 1. ²¥·ÅÇĞ²Ë¶¯»­
         itemTableAnim.SetTrigger("Chop");
-        yield return new WaitForSeconds(0.5f); // µÈ´ı¶¯»­²¥·Å
+        yield return new WaitForSeconds(0.5f);
 
-        // 2. Éú³ÉÇĞºÃµÄÅäÁÏÍ¼±ê
         GameObject go = Instantiate(choppedPrefab, choppedParent);
 
-        // 3. ¼ÇÂ¼¼ÆÊı
         switch (type)
         {
             case IngredientType.Apple: currentApple++; break;
@@ -56,22 +51,21 @@ public class FillManager : MonoBehaviour
         }
         totalFilled++;
 
-        // 4. ¸üĞÂUIÏÔÊ¾£¨Èç¹ûÄãÓĞTextÏÔÊ¾ÊıÁ¿£¬¿ÉÒÔÔÚÕâÀï¸üĞÂ£©
     }
 
-    // µã»÷Ñ¼×Ó£¨Duck_Fill£©´¥·¢Ìî³äÅĞ¶¨
     public void OnClickDuckFill()
     {
         if (currentApple == targetApple && currentOnion == targetOnion && currentOrange == targetOrange)
         {
             GameData.isStuffingDone = true;
-            Debug.Log("Ìî³äÍêÃÀ£¡±ÈÀıÕıÈ·£¡");
-            // ¿ÉÒÔ²¥·ÅÒ»¸öÌî³äÍê³ÉÌØĞ§
+
+            // å¡«æ–™å®Œæˆï¼šè¿›åº¦ 80%ï¼Œå¼¹å‡ºâ€œæ­¥éª¤äº” åˆ·æ±â€
+            PanelManager panelManager = PanelManager.Instance;
+            if (panelManager == null) panelManager = FindObjectOfType<PanelManager>(true);
+            if (panelManager != null) panelManager.Step5();
         }
         else
         {
-            Debug.Log($"Ìî³ä±ÈÀı²»¶Ô£¡µ±Ç° Æ»¹û:{currentApple}/{targetApple}, Ñó´Ğ:{currentOnion}/{targetOnion}, ³È×Ó:{currentOrange}/{targetOrange}");
-            // ÌáÊ¾Íæ¼Ò´íÎó£¨¿Éµ¯´°£©
         }
     }
 }

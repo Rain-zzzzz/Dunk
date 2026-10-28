@@ -57,6 +57,5 @@ public class IconPop : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     private void PlaySFX()
     {
-        //GameScene.instance.sfx.Play();
     }
 }

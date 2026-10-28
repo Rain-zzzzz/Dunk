@@ -31,7 +31,6 @@ public class Btn : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPo
 
     private void ClickBtn()
     {
-        //GameScene.instance.sfx.Play();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

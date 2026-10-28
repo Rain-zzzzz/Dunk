@@ -3,8 +3,8 @@ using UnityEngine.UI;
 
 public class BagItemSlot : MonoBehaviour
 {
-    public ItemData item;       // 这个槽位对应的物品
-    public Text countText;      // 显示"数量：X"的 Text
+    public ItemData item;
+    public Text countText;
 
     void OnEnable()
     {

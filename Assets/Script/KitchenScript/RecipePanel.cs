@@ -17,13 +17,11 @@ public class RecipePanel : MonoBehaviour
     "步骤7：第二次风干\n" +
     "步骤8：放入烤箱烘烤\n" +
     "⚠️时间太长烤焦，时间太短没熟透";
-    //打开食谱
     public void OpenRecipe()
     {
         recipePanel.SetActive(true);
         recipeText.text = duckRecipe;
     }
-    //关闭食谱
     public void CloseRecipe()
     {
         recipePanel.SetActive(false);

@@ -16,10 +16,8 @@ public class UIShoppingList : MonoBehaviour
     void OnEnable()
     {
         RefreshUI();
-        // 绑定库存监听
         if (InventoryManager.Instance != null)
             InventoryManager.Instance.OnInventoryChangedExternal += RefreshUI;
-        // 每次打开自动切换关闭按钮逻辑
         SwitchCloseBtnLogic();
     }
 
@@ -29,23 +27,18 @@ public class UIShoppingList : MonoBehaviour
             InventoryManager.Instance.OnInventoryChangedExternal -= RefreshUI;
     }
 
-    // 自动判断底层是商店还是厨房，切换关闭函数
     void SwitchCloseBtnLogic()
     {
         if (closeBtn == null || KitchenUIManager.Instance == null) return;
-        // 清空手动绑定的所有事件，避免冲突
         closeBtn.onClick.RemoveAllListeners();
 
-        // 判断商店是否正在显示
         bool shopIsOpen = KitchenUIManager.Instance.panelShop.activeSelf;
         if (shopIsOpen)
         {
-            // 商店打开的清单：只关清单，商店留下
             closeBtn.onClick.AddListener(KitchenUIManager.Instance.CloseShoppingListOnly);
         }
         else
         {
-            // 厨房打开的清单：全部关闭，回到厨房
             closeBtn.onClick.AddListener(KitchenUIManager.Instance.CloseAll);
         }
     }
@@ -54,12 +47,10 @@ public class UIShoppingList : MonoBehaviour
     {
         if (gridParent == null || slotPrefab == null)
         {
-            Debug.LogError("清单缺少格子父物体/预制体赋值！");
             return;
         }
         if (requiredItems == null || requiredItems.Count == 0)
         {
-            Debug.LogWarning("清单未配置需求食材！");
             return;
         }
 
@@ -69,7 +60,8 @@ public class UIShoppingList : MonoBehaviour
         foreach (var item in requiredItems)
         {
             if (item == null) continue;
-            int have = InventoryManager.Instance.GetItemCount(item);
+            var inventory = InventoryManager.Instance;
+            int have = inventory != null ? inventory.GetItemCount(item) : 0;
             int need = item.craftNeedNum;
 
             GameObject slot = Instantiate(slotPrefab, gridParent);
@@ -85,14 +77,6 @@ public class UIShoppingList : MonoBehaviour
                 countTf.GetComponent<Text>().color = have < need ? Color.red : Color.green;
             }
 
-            // 动态挂载拖拽组件：运行时从 prefab 实例化的物品默认不带 DragFollow/DraggableItemTag，
-            // 这里补上，并按当前物品设置 itemName，保证能拖动到触发区。
-            if (slot.GetComponent<DragFollow>() == null)
-                slot.AddComponent<DragFollow>();
-            var tag = slot.GetComponent<DraggableItemTag>();
-            if (tag == null)
-                tag = slot.AddComponent<DraggableItemTag>();
-            tag.itemName = item.itemName;
         }
     }
 }

@@ -388,7 +388,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 117420496}
-  - component: {fileID: 117420495}
   - component: {fileID: 117420497}
   m_Layer: 0
   m_Name: GameManager
@@ -397,22 +396,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &117420495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 117420494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cf7df04f66af49345a206e8999cf3ed9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider_BGM: {fileID: 0}
-  toggle_BGM: {fileID: 0}
-  slider_SFX: {fileID: 0}
-  toggle_SFX: {fileID: 0}
 --- !u!4 &117420496
 Transform:
   m_ObjectHideFlags: 0
